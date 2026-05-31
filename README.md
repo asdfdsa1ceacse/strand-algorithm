@@ -108,8 +108,9 @@ pip install dna-memory
 - **MIT** — 个人、社区、开源项目免费使用
 - **企业商用许可** — 企业级部署需要授权
 
-联系方式: [GitHub Issues](https://github.com/asdfdsa1ceacse/strand-algorithm/issues)
+## 联系方式
 
-## 作者
-
-**钟一鸣** — 2026
+- **作者**: 钟一鸣
+- **邮箱**: 2353650645@qq.com
+- **微信**: 15800254733
+- **GitHub Issues**: [创建 Issue](https://github.com/asdfdsa1ceacse/strand-algorithm/issues)
