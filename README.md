@@ -114,3 +114,16 @@ pip install dna-memory
 - **邮箱**: 2353650645@qq.com
 - **微信**: 15800254733
 - **GitHub Issues**: [创建 Issue](https://github.com/asdfdsa1ceacse/strand-algorithm/issues)
+
+## 📄 论文 / Papers
+
+- **v2.1 — 理论体系完整版** (推荐): `Strand_Algorithm_理论体系_v2.docx`
+  按单一因果链组织：空间→DNA坐标→虫洞→多模态→双螺旋→复制体穿行→记忆→养蛊→坍缩→跨域→编译
+- **v1 — 旧版草案**: `Strand_Algorithm_理论体系_v1_旧版草稿.docx`
+  初版草稿，章节为并行概念排列，逻辑不如v2流畅
+
+## 🌐 链接
+
+- **Zenodo**: [10.5281/zenodo.20474405](https://doi.org/10.5281/zenodo.20474405)
+- **PyPI**: `pip install dna-memory`
+- **论文桌面版**: `C:\Users\zym15\Desktop\Strand_Algorithm_理论体系_v2.docx`
