@@ -1,3 +1,26 @@
+Metadata-Version: 2.4
+Name: abstract-dna
+Version: 1.0.0
+Summary: Structural matching engine that bypasses the semantic gap. Zero LLM, zero hallucination, 99.9% coverage.
+Author-email: 钟一鸣 <2353650645@qq.com>
+License: MIT
+Project-URL: Homepage, https://github.com/asdfdsa1ceacse/strand-algorithm/tree/main/abstract-dna
+Project-URL: Repository, https://github.com/asdfdsa1ceacse/strand-algorithm
+Keywords: strand,dna,nlp,pattern-matching,zero-llm,chinese-nlp
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Text Processing :: Linguistic
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+
 # Abstract DNA
 
 **Structural matching that bypasses the semantic gap.**

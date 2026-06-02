@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "abstract-dna"
+version = "1.0.0"
+description = "Structural matching engine that bypasses the semantic gap. Zero LLM, zero hallucination, 99.9% coverage."
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "钟一鸣", email = "2353650645@qq.com"},
+]
+keywords = ["strand", "dna", "nlp", "pattern-matching", "zero-llm", "chinese-nlp"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: Linguistic",
+]
+requires-python = ">=3.9"
+
+[project.urls]
+Homepage = "https://github.com/asdfdsa1ceacse/strand-algorithm/tree/main/abstract-dna"
+Repository = "https://github.com/asdfdsa1ceacse/strand-algorithm"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"abstract_dna" = ["data/*.json"]

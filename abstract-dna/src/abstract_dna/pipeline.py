@@ -19,8 +19,13 @@ LAB_DIR = os.path.dirname(os.path.abspath(__file__))
 class RuleChannel:
     def __init__(self, rules_path=None):
         if rules_path is None:
-            rules_path = os.path.join(LAB_DIR, 'rules', 'rules_v10.json')
-        with open(rules_path) as f:
+            # Look for bundled data file relative to package
+            pkg_dir = os.path.dirname(os.path.abspath(__file__))
+            rules_path = os.path.join(pkg_dir, 'data', 'rules.json')
+            if not os.path.exists(rules_path):
+                # Fallback to old lab path
+                rules_path = os.path.join(os.path.dirname(pkg_dir), 'rules', 'rules_v10.json')
+        with open(rules_path, encoding='utf-8') as f:
             data = json.load(f)
         self.rules = data['rules']
         for r in self.rules:

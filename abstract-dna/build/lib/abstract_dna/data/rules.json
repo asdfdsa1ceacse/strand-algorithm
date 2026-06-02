@@ -1,0 +1,2973 @@
+{
+  "version": 10,
+  "description": "v10: 6新信号(proceed/memory/question/cost/backup/experiment) + 清垃圾 + 修假阳性",
+  "rules": [
+    {
+      "pattern": "研究生|硕士|博士|本科|大专|master|graduate|degree|phd",
+      "signal": "education:graduate",
+      "weight": 0.4,
+      "_idx": 0
+    },
+    {
+      "pattern": "学生|入学|录取|报考|test|exam|score|admission|requirements|requirement|recruit|enroll|apply|application|admission|requirements|requirement|recruit|enroll|apply|application",
+      "signal": "education:admission",
+      "weight": 0.3,
+      "_idx": 1
+    },
+    {
+      "pattern": "导师|教授|老师|supervisor|advisor|professor",
+      "signal": "education:faculty",
+      "weight": 0.4,
+      "_idx": 2
+    },
+    {
+      "pattern": "课程|课|class|course|lecture",
+      "signal": "education:course",
+      "weight": 0.3,
+      "_idx": 3
+    },
+    {
+      "pattern": "论文|毕业设计|thesis|dissertation|paper",
+      "signal": "education:thesis",
+      "weight": 0.2,
+      "_idx": 4
+    },
+    {
+      "pattern": "上传|下载|提交|发布|push|upload|download|release",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "_idx": 5
+    },
+    {
+      "pattern": "安装|部署|配置|编译|build|install|deploy|compile|setup",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "_idx": 6
+    },
+    {
+      "pattern": "删除|移除|卸载|清理|delete|remove|clean|purge|uninstall",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "_idx": 7
+    },
+    {
+      "pattern": "搜索|查找|查询|search|find|query|lookup|recall",
+      "signal": "action:search",
+      "weight": 0.3,
+      "_idx": 8
+    },
+    {
+      "pattern": "创建|新建|增加|添加|create|add|new|insert|append",
+      "signal": "action:create",
+      "weight": 0.3,
+      "_idx": 9
+    },
+    {
+      "pattern": "修改|编辑|更新|变更|update|edit|modify|change|patch",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "_idx": 10
+    },
+    {
+      "pattern": "修复|解决|修补|fix|repair|resolve|hotfix|patch",
+      "signal": "action:fix",
+      "weight": 0.3,
+      "_idx": 11
+    },
+    {
+      "pattern": "生成|产生|合成|generate|produce|render",
+      "signal": "action:generate",
+      "weight": 0.3,
+      "_idx": 12
+    },
+    {
+      "pattern": "导入|导出|迁移|import|export|migrate",
+      "signal": "action:io",
+      "weight": 0.3,
+      "_idx": 13
+    },
+    {
+      "pattern": "启动|停止|重启|运行|start|stop|restart|run|launch|service|daemon|process|serve|任务|job",
+      "signal": "action:process",
+      "weight": 0.3,
+      "_idx": 14
+    },
+    {
+      "pattern": "授权|登录|注册|auth|login|register|signin|permission|密钥|token|key|credential|secret|certificate|cert",
+      "signal": "action:auth",
+      "weight": 0.3,
+      "_idx": 15
+    },
+    {
+      "pattern": "错误|异常|崩溃|失败|error|fail|crash|exception|bug|超时|过期|报错|expire|expired|timeout|invalid|超时|过期|报错|timeout|expire|expired|invalid",
+      "signal": "status:error",
+      "weight": 0.4,
+      "_idx": 16
+    },
+    {
+      "pattern": "成功|通过|完成|done|success|pass|complete|finish|检查|检测|验证|inspect|check|verify|validate|healthy|正常",
+      "signal": "status:ok",
+      "weight": 0.3,
+      "_idx": 17
+    },
+    {
+      "pattern": "警告|注意|小心|warning|alert|caution|notice|即将|将近|快要|remind|reminder|notif|提醒|过期|notif|notice|warn",
+      "signal": "status:warning",
+      "weight": 0.4,
+      "_idx": 18
+    },
+    {
+      "pattern": "等待|暂停|延迟|wait|pending|delay|suspend|pause",
+      "signal": "status:pending",
+      "weight": 0.3,
+      "_idx": 19
+    },
+    {
+      "pattern": "用户|人|开发者|admin|user|developer|admin|operator",
+      "signal": "entity:person",
+      "weight": 0.1,
+      "_idx": 20
+    },
+    {
+      "pattern": "服务器|机器|节点|server|host|node|vm|instance",
+      "signal": "entity:machine",
+      "weight": 0.2,
+      "_idx": 21
+    },
+    {
+      "pattern": "文件|文档|档案|file|document|archive|config",
+      "signal": "entity:file",
+      "weight": 0.2,
+      "_idx": 22
+    },
+    {
+      "pattern": "数据|信息|内容|data|info|content|metadata|会议|记录|会话|报告|日志|meeting|record|session|report|log",
+      "signal": "entity:data",
+      "weight": 0.2,
+      "_idx": 23
+    },
+    {
+      "pattern": "项目|工程|仓库|repo|project|workspace|repository",
+      "signal": "entity:project",
+      "weight": 0.2,
+      "_idx": 24
+    },
+    {
+      "pattern": "网络|页面|网址|site|web|page|url|network|domain",
+      "signal": "entity:web",
+      "weight": 0.2,
+      "_idx": 25
+    },
+    {
+      "pattern": "python|java|go|rust|cpp|c\\+\\+|typescript|node|javascript",
+      "signal": "tech:language",
+      "weight": 0.3,
+      "_idx": 26
+    },
+    {
+      "pattern": "gpu|cuda|显卡|训练|推理|模型|model|train|inference|ml",
+      "signal": "tech:ml",
+      "weight": 0.3,
+      "_idx": 27
+    },
+    {
+      "pattern": "数据库|db|sql|mysql|postgres|redis|mongo|database",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "_idx": 28
+    },
+    {
+      "pattern": "api|接口|endpoint|rest|rpc|grpc|http|url",
+      "signal": "tech:api",
+      "weight": 0.3,
+      "_idx": 29
+    },
+    {
+      "pattern": "docker|容器|镜像|container|image|k8s|kubernetes",
+      "signal": "tech:container",
+      "weight": 0.3,
+      "_idx": 30
+    },
+    {
+      "pattern": "http|https|tcp|ip|端口|port|socket|network",
+      "signal": "tech:protocol",
+      "weight": 0.3,
+      "_idx": 31
+    },
+    {
+      "pattern": "今天|昨天|明天|今天|today|yesterday|tomorrow",
+      "signal": "time:near",
+      "weight": 0.2,
+      "_idx": 32
+    },
+    {
+      "pattern": "上周|本周|下周|月|年|周|last|this|next|week|month|year",
+      "signal": "time:period",
+      "weight": 0.2,
+      "_idx": 33
+    },
+    {
+      "pattern": "凌晨|早上|上午|中午|下午|晚上|morning|noon|afternoon|evening|night",
+      "signal": "time:daypart",
+      "weight": 0.2,
+      "_idx": 34
+    },
+    {
+      "pattern": "最近|近期|之前|之前|recent|latest|last|previous|earlier",
+      "signal": "time:recent",
+      "weight": 0.3,
+      "_idx": 35
+    },
+    {
+      "pattern": "全部|所有|每个|每个|all|every|each|total|whole",
+      "signal": "quant:all",
+      "weight": 0.2,
+      "_idx": 36
+    },
+    {
+      "pattern": "部分|一些|某些|some|partial|few|several|certain",
+      "signal": "quant:partial",
+      "weight": 0.2,
+      "_idx": 37
+    },
+    {
+      "pattern": "很多|大量|许多|many|lot|numerous|plenty|massive",
+      "signal": "quant:many",
+      "weight": 0.2,
+      "_idx": 38
+    },
+    {
+      "pattern": "唯一|单个|单独|only|single|unique|sole|one",
+      "signal": "quant:one",
+      "weight": 0.2,
+      "_idx": 39
+    },
+    {
+      "pattern": "第一|首先|1st|首先|first|primary|initial|top",
+      "signal": "quant:first",
+      "weight": 0.2,
+      "_idx": 40
+    },
+    {
+      "pattern": "和|与|及|同|以及|and|with|plus|together",
+      "signal": "rel:and",
+      "weight": 0.05,
+      "_idx": 41
+    },
+    {
+      "pattern": "或|或者|还是|or|either|otherwise|alternative",
+      "signal": "rel:or",
+      "weight": 0.1,
+      "_idx": 42
+    },
+    {
+      "pattern": "不是|没有|不|no|not|without|none|never",
+      "signal": "rel:negate",
+      "weight": 0.1,
+      "_idx": 43,
+      "_note": "weight reduced for less false positives"
+    },
+    {
+      "pattern": "属于|包含|包括|属于|in|within|inside|belong|include|contain",
+      "signal": "rel:contain",
+      "weight": 0.2,
+      "_idx": 44
+    },
+    {
+      "pattern": "图片|照片|图像|screen|截图|image|photo|pic|screenshot|头像|avatar|icon|thumbnail",
+      "signal": "format:image",
+      "weight": 0.3,
+      "_idx": 45
+    },
+    {
+      "pattern": "视频|录像|影片|video|movie|clip|record|录制",
+      "signal": "format:video",
+      "weight": 0.3,
+      "_idx": 46
+    },
+    {
+      "pattern": "音频|声音|音乐|audio|sound|music|voice|speech",
+      "signal": "format:audio",
+      "weight": 0.3,
+      "_idx": 47
+    },
+    {
+      "pattern": "文本|文字|txt|text|markdown|md|readme|article|笔记|文章|博客|note|article|blog|doc|readme|记录|纪要|笔记|内容|内容",
+      "signal": "format:text",
+      "weight": 0.2,
+      "_idx": 48
+    },
+    {
+      "pattern": "代码|源码|code|source|script|program|src|implementation",
+      "signal": "format:code",
+      "weight": 0.3,
+      "_idx": 49
+    },
+    {
+      "pattern": "json|yaml|xml|csv|toml|config|配置文件|格式化|format",
+      "signal": "format:structured",
+      "weight": 0.3,
+      "_idx": 50
+    },
+    {
+      "pattern": "exe|安装包|包|包|package|whl|deb|rpm|binary|可执行|mp4|avi|mov|mkv|zip|tar|rar|iso|dmg",
+      "signal": "format:binary",
+      "weight": 0.3,
+      "_idx": 51
+    },
+    {
+      "pattern": "检查|检测|验证|审查|巡检|audit|review|crawl|scan|inspect|diagnose",
+      "signal": "action:inspect",
+      "weight": 0.3,
+      "_idx": 52
+    },
+    {
+      "pattern": "凭证不对",
+      "signal": "rel:negate",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:13:17",
+      "_idx": 53
+    },
+    {
+      "pattern": "这个包",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": false,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:16:23",
+      "_idx": 54
+    },
+    {
+      "pattern": "传图片",
+      "signal": "format:image",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:16:23",
+      "_idx": 55
+    },
+    {
+      "pattern": "上传头像",
+      "signal": "format:image",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:16:23",
+      "_idx": 56
+    },
+    {
+      "pattern": "认证超时",
+      "signal": "action:auth",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 57
+    },
+    {
+      "pattern": "密钥过期",
+      "signal": "action:auth",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 58
+    },
+    {
+      "pattern": "branch",
+      "signal": "status:error",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 59
+    },
+    {
+      "pattern": "报错了",
+      "signal": "status:error",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 6,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 60
+    },
+    {
+      "pattern": "服务器挂",
+      "signal": "status:error",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 61
+    },
+    {
+      "pattern": "出错了",
+      "signal": "status:error",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 6,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 62
+    },
+    {
+      "pattern": "清空配置",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 63
+    },
+    {
+      "pattern": "怎么配置",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 64
+    },
+    {
+      "pattern": "部署页面",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 65
+    },
+    {
+      "pattern": "更新一下",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 66
+    },
+    {
+      "pattern": "environment",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 67
+    },
+    {
+      "pattern": "development",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 68
+    },
+    {
+      "pattern": "配置任务",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 6,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 69
+    },
+    {
+      "pattern": "变更系统",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 70
+    },
+    {
+      "pattern": "module",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 71
+    },
+    {
+      "pattern": "压缩包",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 72
+    },
+    {
+      "pattern": "pull",
+      "signal": "format:image",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 6,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 73
+    },
+    {
+      "pattern": "resource",
+      "signal": "format:image",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 74
+    },
+    {
+      "pattern": "域名代码",
+      "signal": "format:code",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 6,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 75
+    },
+    {
+      "pattern": "看代码",
+      "signal": "format:code",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 76
+    },
+    {
+      "pattern": "导入数据",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 77
+    },
+    {
+      "pattern": "分享域名",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 78
+    },
+    {
+      "pattern": "initiate",
+      "signal": "tech:api",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 79
+    },
+    {
+      "pattern": "找接口",
+      "signal": "tech:api",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 80
+    },
+    {
+      "pattern": "清一下缓",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 6,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 81
+    },
+    {
+      "pattern": "机器仓库",
+      "signal": "entity:machine",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 82
+    },
+    {
+      "pattern": "跑一下系",
+      "signal": "action:process",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 6,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 83
+    },
+    {
+      "pattern": "起起来",
+      "signal": "action:process",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 6,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 84
+    },
+    {
+      "pattern": "把压缩包",
+      "signal": "action:process",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 6,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 85
+    },
+    {
+      "pattern": "grep",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 6,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 86
+    },
+    {
+      "pattern": "搜索视频",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 87
+    },
+    {
+      "pattern": "检测应用",
+      "signal": "action:inspect",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:21:22",
+      "_idx": 88
+    },
+    {
+      "pattern": "安装脚本",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 89
+    },
+    {
+      "pattern": "装一下模",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 6,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 90
+    },
+    {
+      "pattern": "装一下脚",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 5,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 91
+    },
+    {
+      "pattern": "初始化环",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 5,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 92
+    },
+    {
+      "pattern": "搞个组件",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 93
+    },
+    {
+      "pattern": "传一下文",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 94
+    },
+    {
+      "pattern": "迁移会话",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 95
+    },
+    {
+      "pattern": "删掉更新",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 96
+    },
+    {
+      "pattern": "把文档删",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 6,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 97
+    },
+    {
+      "pattern": "搜索图片",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 5,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 98
+    },
+    {
+      "pattern": "查找图片",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 99
+    },
+    {
+      "pattern": "在哪里",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 100
+    },
+    {
+      "pattern": "检索配置",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 101
+    },
+    {
+      "pattern": "更新日志",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 102
+    },
+    {
+      "pattern": "更新包",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 5,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 103
+    },
+    {
+      "pattern": "置文件",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 6,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 104
+    },
+    {
+      "pattern": "改一下配",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 6,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 105
+    },
+    {
+      "pattern": "把源码包",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 106
+    },
+    {
+      "pattern": "rename",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 107
+    },
+    {
+      "pattern": "停止服务",
+      "signal": "action:process",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 5,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 108
+    },
+    {
+      "pattern": "连不上",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 109
+    },
+    {
+      "pattern": "认证失败",
+      "signal": "status:error",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 6,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 110
+    },
+    {
+      "pattern": "操作超时",
+      "signal": "status:error",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 5,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 111
+    },
+    {
+      "pattern": "检查项目",
+      "signal": "action:inspect",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 112
+    },
+    {
+      "pattern": "检查系统",
+      "signal": "action:inspect",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 113
+    },
+    {
+      "pattern": "远程服务",
+      "signal": "action:inspect",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 5,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 114
+    },
+    {
+      "pattern": "巡检系统",
+      "signal": "action:inspect",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 115
+    },
+    {
+      "pattern": "登录不了",
+      "signal": "action:auth",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 7,
+      "generated_at": "2026-06-03 02:21:44",
+      "_idx": 116
+    },
+    {
+      "pattern": "装个模块",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 117
+    },
+    {
+      "pattern": "装个组件",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 118
+    },
+    {
+      "pattern": "装一下插",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 119
+    },
+    {
+      "pattern": "装一下驱",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 120
+    },
+    {
+      "pattern": "装驱动用",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 121
+    },
+    {
+      "pattern": "装插件用",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 122
+    },
+    {
+      "pattern": "帮我装个",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 24,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 123
+    },
+    {
+      "pattern": "需要装插",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 124
+    },
+    {
+      "pattern": "需要装工",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 125
+    },
+    {
+      "pattern": "需要装模",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 126
+    },
+    {
+      "pattern": "装一个引",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 127
+    },
+    {
+      "pattern": "装一个脚",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 128
+    },
+    {
+      "pattern": "装一个驱",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 129
+    },
+    {
+      "pattern": "搭建模块",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 130
+    },
+    {
+      "pattern": "搭建插件",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 131
+    },
+    {
+      "pattern": "搭建脚本",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 132
+    },
+    {
+      "pattern": "把组件装",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 133
+    },
+    {
+      "pattern": "把插件装",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 134
+    },
+    {
+      "pattern": "把工具装",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 135
+    },
+    {
+      "pattern": "把工具部",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 136
+    },
+    {
+      "pattern": "把工具配",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 137
+    },
+    {
+      "pattern": "把脚本装",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 138
+    },
+    {
+      "pattern": "把脚本部",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 139
+    },
+    {
+      "pattern": "把脚本配",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 140
+    },
+    {
+      "pattern": "把服务装",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 141
+    },
+    {
+      "pattern": "把服务部",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 142
+    },
+    {
+      "pattern": "把服务配",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 143
+    },
+    {
+      "pattern": "把环境装",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 144
+    },
+    {
+      "pattern": "把环境部",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 145
+    },
+    {
+      "pattern": "把环境配",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 146
+    },
+    {
+      "pattern": "把组件部",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 147
+    },
+    {
+      "pattern": "把组件配",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 148
+    },
+    {
+      "pattern": "把驱动装",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 149
+    },
+    {
+      "pattern": "把驱动部",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 150
+    },
+    {
+      "pattern": "把驱动配",
+      "signal": "action:setup",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 151
+    },
+    {
+      "pattern": "sync",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 3,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 152
+    },
+    {
+      "pattern": "把项目推",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 153
+    },
+    {
+      "pattern": "把源码推",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 154
+    },
+    {
+      "pattern": "把分支推",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 155
+    },
+    {
+      "pattern": "把代码提",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 156
+    },
+    {
+      "pattern": "把代码推",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 157
+    },
+    {
+      "pattern": "把代码",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 158
+    },
+    {
+      "pattern": "推上去了",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 159
+    },
+    {
+      "pattern": "怎么推代",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 160
+    },
+    {
+      "pattern": "到远程",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 161
+    },
+    {
+      "pattern": "推送项目",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 162
+    },
+    {
+      "pattern": "推送源码",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 163
+    },
+    {
+      "pattern": "源码推上",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 164
+    },
+    {
+      "pattern": "去了吗",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 24,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 165
+    },
+    {
+      "pattern": "项目推上",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 166
+    },
+    {
+      "pattern": "代码推上",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 167
+    },
+    {
+      "pattern": "把代码上",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 168
+    },
+    {
+      "pattern": "把代码传",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 169
+    },
+    {
+      "pattern": "把代码同",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 170
+    },
+    {
+      "pattern": "把文件推",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 171
+    },
+    {
+      "pattern": "把文件提",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 172
+    },
+    {
+      "pattern": "把文件上",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 173
+    },
+    {
+      "pattern": "把文件传",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 174
+    },
+    {
+      "pattern": "把文件同",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 175
+    },
+    {
+      "pattern": "把分支提",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 176
+    },
+    {
+      "pattern": "把分支上",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 177
+    },
+    {
+      "pattern": "把分支传",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 178
+    },
+    {
+      "pattern": "把分支同",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 179
+    },
+    {
+      "pattern": "把版本推",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 180
+    },
+    {
+      "pattern": "把版本提",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 181
+    },
+    {
+      "pattern": "把版本上",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 182
+    },
+    {
+      "pattern": "把版本传",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 183
+    },
+    {
+      "pattern": "把版本同",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 184
+    },
+    {
+      "pattern": "把数据推",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 185
+    },
+    {
+      "pattern": "把数据提",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 186
+    },
+    {
+      "pattern": "把数据上",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 187
+    },
+    {
+      "pattern": "把数据传",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 188
+    },
+    {
+      "pattern": "把数据同",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 189
+    },
+    {
+      "pattern": "把配置推",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 190
+    },
+    {
+      "pattern": "把配置提",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 191
+    },
+    {
+      "pattern": "把配置上",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 192
+    },
+    {
+      "pattern": "把配置传",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 193
+    },
+    {
+      "pattern": "把配置同",
+      "signal": "action:transfer",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 194
+    },
+    {
+      "pattern": "清理记录",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 195
+    },
+    {
+      "pattern": "清理数据",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 196
+    },
+    {
+      "pattern": "删掉配置",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 197
+    },
+    {
+      "pattern": "删掉日志",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 198
+    },
+    {
+      "pattern": "清一下数",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 199
+    },
+    {
+      "pattern": "清一下报",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 200
+    },
+    {
+      "pattern": "清一下会",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 201
+    },
+    {
+      "pattern": "清一清数",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 202
+    },
+    {
+      "pattern": "清一清记",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 203
+    },
+    {
+      "pattern": "清一清会",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 204
+    },
+    {
+      "pattern": "把数据清",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 24,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 205
+    },
+    {
+      "pattern": "把会话清",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 206
+    },
+    {
+      "pattern": "把日志删",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 24,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 207
+    },
+    {
+      "pattern": "把记录删",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 208
+    },
+    {
+      "pattern": "把会话删",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 209
+    },
+    {
+      "pattern": "清掉缓存",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 210
+    },
+    {
+      "pattern": "清掉日志",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 211
+    },
+    {
+      "pattern": "清掉报告",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 212
+    },
+    {
+      "pattern": "帮我清一",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 213
+    },
+    {
+      "pattern": "下日志",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 214
+    },
+    {
+      "pattern": "下记录",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 215
+    },
+    {
+      "pattern": "清理日志",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 216
+    },
+    {
+      "pattern": "清除缓存",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 217
+    },
+    {
+      "pattern": "清除日志",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 218
+    },
+    {
+      "pattern": "删掉文档",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 219
+    },
+    {
+      "pattern": "把报告删",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 220
+    },
+    {
+      "pattern": "把文件删",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 221
+    },
+    {
+      "pattern": "把日志移",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 222
+    },
+    {
+      "pattern": "把配置移",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 223
+    },
+    {
+      "pattern": "把文件清",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 24,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 224
+    },
+    {
+      "pattern": "把文件移",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 225
+    },
+    {
+      "pattern": "把缓存删",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 226
+    },
+    {
+      "pattern": "把缓存清",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 24,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 227
+    },
+    {
+      "pattern": "把缓存移",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 228
+    },
+    {
+      "pattern": "把日志清",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 24,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 229
+    },
+    {
+      "pattern": "把数据删",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 230
+    },
+    {
+      "pattern": "把数据移",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 231
+    },
+    {
+      "pattern": "把配置删",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 232
+    },
+    {
+      "pattern": "把配置清",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 24,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 233
+    },
+    {
+      "pattern": "把记录清",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 24,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 234
+    },
+    {
+      "pattern": "把记录移",
+      "signal": "action:delete",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 235
+    },
+    {
+      "pattern": "搜一下日",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 236
+    },
+    {
+      "pattern": "查一下记",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 237
+    },
+    {
+      "pattern": "查一下日",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 238
+    },
+    {
+      "pattern": "帮我找记",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 239
+    },
+    {
+      "pattern": "帮我找文",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 240
+    },
+    {
+      "pattern": "帮我找报",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 241
+    },
+    {
+      "pattern": "帮我搜一",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 24,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 242
+    },
+    {
+      "pattern": "下报告",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 243
+    },
+    {
+      "pattern": "下配置",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 244
+    },
+    {
+      "pattern": "帮我查会",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 245
+    },
+    {
+      "pattern": "帮我查记",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 246
+    },
+    {
+      "pattern": "帮我查缓",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 247
+    },
+    {
+      "pattern": "帮我找找",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 24,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 248
+    },
+    {
+      "pattern": "找找报告",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 249
+    },
+    {
+      "pattern": "找找文档",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 250
+    },
+    {
+      "pattern": "找找文件",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 251
+    },
+    {
+      "pattern": "在哪里可",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 24,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 252
+    },
+    {
+      "pattern": "以找到配",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 253
+    },
+    {
+      "pattern": "以找到日",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 254
+    },
+    {
+      "pattern": "以找到记",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 255
+    },
+    {
+      "pattern": "搜一下文",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 256
+    },
+    {
+      "pattern": "查找报告",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 257
+    },
+    {
+      "pattern": "查找文档",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 258
+    },
+    {
+      "pattern": "帮我看看",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 259
+    },
+    {
+      "pattern": "看看报告",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 260
+    },
+    {
+      "pattern": "看看日志",
+      "signal": "action:search",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 261
+    },
+    {
+      "pattern": "修改文档",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 262
+    },
+    {
+      "pattern": "改一下记",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 263
+    },
+    {
+      "pattern": "改一下报",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 264
+    },
+    {
+      "pattern": "改一下日",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 265
+    },
+    {
+      "pattern": "把日志改",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 266
+    },
+    {
+      "pattern": "把文件改",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 267
+    },
+    {
+      "pattern": "把记录改",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 268
+    },
+    {
+      "pattern": "改一下",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 269
+    },
+    {
+      "pattern": "把文件修",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 270
+    },
+    {
+      "pattern": "把报告修",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 271
+    },
+    {
+      "pattern": "改动日志",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 272
+    },
+    {
+      "pattern": "改动文档",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 273
+    },
+    {
+      "pattern": "改动记录",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 274
+    },
+    {
+      "pattern": "修改记录",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 275
+    },
+    {
+      "pattern": "修改文件",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 276
+    },
+    {
+      "pattern": "编辑配置",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 277
+    },
+    {
+      "pattern": "编辑报告",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 278
+    },
+    {
+      "pattern": "编辑记录",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 279
+    },
+    {
+      "pattern": "改个文件",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 280
+    },
+    {
+      "pattern": "改个记录",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 281
+    },
+    {
+      "pattern": "把配置改",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 282
+    },
+    {
+      "pattern": "把配置修",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 283
+    },
+    {
+      "pattern": "把配置更",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 284
+    },
+    {
+      "pattern": "把配置编",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 285
+    },
+    {
+      "pattern": "把配置调",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 286
+    },
+    {
+      "pattern": "把文件更",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 287
+    },
+    {
+      "pattern": "把文件编",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 288
+    },
+    {
+      "pattern": "把文件调",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 289
+    },
+    {
+      "pattern": "把代码改",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 290
+    },
+    {
+      "pattern": "把代码修",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 291
+    },
+    {
+      "pattern": "把代码更",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 292
+    },
+    {
+      "pattern": "把代码编",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 293
+    },
+    {
+      "pattern": "把代码调",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 294
+    },
+    {
+      "pattern": "把参数改",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 295
+    },
+    {
+      "pattern": "把参数修",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 296
+    },
+    {
+      "pattern": "把参数更",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 297
+    },
+    {
+      "pattern": "把参数编",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 298
+    },
+    {
+      "pattern": "把参数调",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 299
+    },
+    {
+      "pattern": "把设置改",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 300
+    },
+    {
+      "pattern": "把设置修",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 301
+    },
+    {
+      "pattern": "把设置更",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 302
+    },
+    {
+      "pattern": "把设置编",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 303
+    },
+    {
+      "pattern": "把设置调",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 304
+    },
+    {
+      "pattern": "把名称改",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 305
+    },
+    {
+      "pattern": "把名称修",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 306
+    },
+    {
+      "pattern": "把名称更",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 307
+    },
+    {
+      "pattern": "把名称编",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 308
+    },
+    {
+      "pattern": "把名称调",
+      "signal": "action:modify",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 309
+    },
+    {
+      "pattern": "查数据库",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 310
+    },
+    {
+      "pattern": "查询数据",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 9,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 311
+    },
+    {
+      "pattern": "查用户数",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 312
+    },
+    {
+      "pattern": "给我查一",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 24,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 313
+    },
+    {
+      "pattern": "下会话",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 314
+    },
+    {
+      "pattern": "下缓存",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 315
+    },
+    {
+      "pattern": "看看数据",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 24,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 316
+    },
+    {
+      "pattern": "库里数据",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 317
+    },
+    {
+      "pattern": "库里报告",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 318
+    },
+    {
+      "pattern": "库里记录",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 319
+    },
+    {
+      "pattern": "查数据",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 320
+    },
+    {
+      "pattern": "从数据库",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 24,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 321
+    },
+    {
+      "pattern": "查日志",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 322
+    },
+    {
+      "pattern": "查缓存",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 8,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 323
+    },
+    {
+      "pattern": "从库里查",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 324
+    },
+    {
+      "pattern": "select",
+      "signal": "tech:database",
+      "weight": 0.3,
+      "auto_generated": true,
+      "hit_count": 16,
+      "generated_at": "2026-06-03 02:23:51",
+      "_idx": 325
+    },
+    {
+      "pattern": "查询数据|查询用户数据|query database|query data|从数据库",
+      "signal": "tech:database",
+      "weight": 0.5,
+      "_idx": 326
+    },
+    {
+      "pattern": "查数据库|查用户|查数据|check database|check data",
+      "signal": "tech:database",
+      "weight": 0.4,
+      "auto_generated": true,
+      "_idx": 327
+    },
+    {
+      "pattern": "查配置|查看配置|search config|check config",
+      "signal": "action:search",
+      "weight": 0.4,
+      "auto_generated": true,
+      "_idx": 328
+    },
+    {
+      "pattern": "开始|继续|开工|开干|启动",
+      "signal": "action:proceed",
+      "weight": 0.4,
+      "_idx": 329
+    },
+    {
+      "pattern": "好了|好的|好吧|好啦|好滴|好呀|好啊|好嘞|好咯",
+      "signal": "action:proceed",
+      "weight": 0.3,
+      "_idx": 330
+    },
+    {
+      "pattern": "可以|可以了|可以的|行|行吧|行啊|行的|走着|来吧|搞起|开整",
+      "signal": "action:proceed",
+      "weight": 0.3,
+      "_idx": 331
+    },
+    {
+      "pattern": "试试|试一试|试一|试下|搞搞|搞一|搞一下|整一整|整起来|整一",
+      "signal": "action:proceed",
+      "weight": 0.3,
+      "_idx": 332
+    },
+    {
+      "pattern": "整|搞|来|干",
+      "signal": "action:proceed",
+      "weight": 0.2,
+      "_idx": 333
+    },
+    {
+      "pattern": "记忆|记忆池|strand|记住|记得|回忆|想起|忘记|忘|遗忘|forget|memorize",
+      "signal": "action:memory",
+      "weight": 0.4,
+      "_idx": 334
+    },
+    {
+      "pattern": "recall|retain|沉淀|存入|存到|存一|存进|写入|存储|保存|存档|归档|保存一",
+      "signal": "action:memory",
+      "weight": 0.4,
+      "_idx": 335
+    },
+    {
+      "pattern": "记住|记着|记下|记忆体|存储|recognition|recall|memor",
+      "signal": "action:memory",
+      "weight": 0.3,
+      "_idx": 336
+    },
+    {
+      "pattern": "memory|memoir|备忘录|备忘|笔记|备注|label|tag|标注|标记",
+      "signal": "action:memory",
+      "weight": 0.3,
+      "_idx": 337
+    },
+    {
+      "pattern": "gpu|显卡|cuda|训练|推理|模型|model|train|infer|ml|ai|dee[p]*seek|chatgpt|claude|llm|大模型",
+      "signal": "tech:ml",
+      "weight": 0.3,
+      "_idx": 338
+    },
+    {
+      "pattern": "视频|影片|video|movie|clip|录像|录制|animation|动画|render|渲染|生成|gen|produc|合成|合成",
+      "signal": "action:generate",
+      "weight": 0.3,
+      "_idx": 339
+    },
+    {
+      "pattern": "服务器|实例|主机|node|cloud|云|autodl|端脑|seacloud|cloud",
+      "signal": "entity:machine",
+      "weight": 0.3,
+      "_idx": 340
+    },
+    {
+      "pattern": "怎么|如何|怎样|为何|why|how|what|which|where",
+      "signal": "intent:question",
+      "weight": 0.2,
+      "_idx": 341
+    },
+    {
+      "pattern": "什么|啥|干嘛|哪|谁|什么时候|几时|多少|what|which|who|whom|whose",
+      "signal": "intent:question",
+      "weight": 0.2,
+      "_idx": 342
+    },
+    {
+      "pattern": "请问|请教|想问|问一|问下|question|query|ask|wonder|doubt|知道吗|知道不",
+      "signal": "intent:question",
+      "weight": 0.2,
+      "_idx": 343
+    },
+    {
+      "pattern": "价格|价钱|费用|花费|花多少|花销|钱|多少钱|贵|便宜|成本|cost|price|fee|budget|expense",
+      "signal": "entity:cost",
+      "weight": 0.3,
+      "_idx": 344
+    },
+    {
+      "pattern": "收费|计费|扣费|付费|付款|账单|bill|charge|pay|payment|价钱|值不值|划算",
+      "signal": "entity:cost",
+      "weight": 0.3,
+      "_idx": 345
+    },
+    {
+      "pattern": "token|tokens|消耗|省|节省|节约|降本|省钱|cheap|econom|budget",
+      "signal": "entity:cost",
+      "weight": 0.3,
+      "_idx": 346
+    },
+    {
+      "pattern": "备份|backup|存档|快照|snapshot|save|保存|safe|secure|保险",
+      "signal": "action:backup",
+      "weight": 0.4,
+      "_idx": 347
+    },
+    {
+      "pattern": "恢复|还原|restore|回滚|rollback|revert|退回|复盘|recovery",
+      "signal": "action:backup",
+      "weight": 0.4,
+      "_idx": 348
+    },
+    {
+      "pattern": "实验|试验|测试|测一|test|experiment|trial|pilot|尝试|试水|验证",
+      "signal": "action:experiment",
+      "weight": 0.3,
+      "_idx": 349
+    },
+    {
+      "pattern": "隔离区|lab|实验区|sandbox|隔离|隔离环境|实验环境",
+      "signal": "action:experiment",
+      "weight": 0.3,
+      "_idx": 350
+    },
+    {
+      "pattern": "停下|停一下|停一|停下来|暂停|停掉|停用|停",
+      "signal": "action:stop",
+      "weight": 0.4,
+      "_idx": 351
+    },
+    {
+      "pattern": "取消|cancel|abort|terminate|kill|中断|断开",
+      "signal": "action:stop",
+      "weight": 0.3,
+      "_idx": 352
+    },
+    {
+      "pattern": "关闭|关掉|关了|退出|exit|quit|结束|finished|done",
+      "signal": "action:close",
+      "weight": 0.3,
+      "_idx": 353
+    }
+  ],
+  "meta": {
+    "total_rules": 354,
+    "manual": 80,
+    "auto": 274,
+    "new_signals_added": [
+      "action:experiment",
+      "entity:machine",
+      "intent:question",
+      "action:proceed",
+      "action:backup",
+      "action:stop",
+      "action:close",
+      "tech:ml",
+      "action:memory",
+      "entity:cost",
+      "action:generate"
+    ],
+    "auto_garbage_removed": 32,
+    "previous_version": 9,
+    "generated_at": "2026-06-03 02:39:04"
+  }
+}
